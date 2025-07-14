@@ -1,0 +1,2055 @@
+{
+  "version": 4,
+  "terraform_version": "1.12.2",
+  "serial": 705,
+  "lineage": "a8ec3bf6-1fa1-ee69-600f-0eae2161ff8a",
+  "outputs": {
+    "s3_bucket_name": {
+      "value": "followme-deploy-bucket-jjo",
+      "type": "string"
+    }
+  },
+  "resources": [
+    {
+      "mode": "managed",
+      "type": "aws_autoscaling_group",
+      "name": "followme_asg",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 1,
+          "attributes": {
+            "arn": "arn:aws:autoscaling:ap-northeast-2:516268691817:autoScalingGroup:c8e5cb84-0683-4701-93ae-0e14328e3c97:autoScalingGroupName/followme-asg",
+            "availability_zone_distribution": [
+              {
+                "capacity_distribution_strategy": "balanced-best-effort"
+              }
+            ],
+            "availability_zones": [
+              "ap-northeast-2a",
+              "ap-northeast-2c"
+            ],
+            "capacity_rebalance": false,
+            "capacity_reservation_specification": [
+              {
+                "capacity_reservation_preference": "default",
+                "capacity_reservation_target": []
+              }
+            ],
+            "context": "",
+            "default_cooldown": 300,
+            "default_instance_warmup": 0,
+            "desired_capacity": 1,
+            "desired_capacity_type": "",
+            "enabled_metrics": [],
+            "force_delete": false,
+            "force_delete_warm_pool": false,
+            "health_check_grace_period": 300,
+            "health_check_type": "ELB",
+            "id": "followme-asg",
+            "ignore_failed_scaling_activities": false,
+            "initial_lifecycle_hook": [],
+            "instance_maintenance_policy": [],
+            "instance_refresh": [],
+            "launch_configuration": "",
+            "launch_template": [
+              {
+                "id": "lt-0446ee6ec4ec9f78f",
+                "name": "followme-lt-20250713085400226500000002",
+                "version": "$Latest"
+              }
+            ],
+            "load_balancers": [],
+            "max_instance_lifetime": 0,
+            "max_size": 2,
+            "metrics_granularity": "1Minute",
+            "min_elb_capacity": null,
+            "min_size": 1,
+            "mixed_instances_policy": [],
+            "name": "followme-asg",
+            "name_prefix": "",
+            "placement_group": "",
+            "predicted_capacity": 0,
+            "protect_from_scale_in": false,
+            "region": "ap-northeast-2",
+            "service_linked_role_arn": "arn:aws:iam::516268691817:role/aws-service-role/autoscaling.amazonaws.com/AWSServiceRoleForAutoScaling",
+            "suspended_processes": [],
+            "tag": [
+              {
+                "key": "Name",
+                "propagate_at_launch": true,
+                "value": "followme-instance"
+              }
+            ],
+            "target_group_arns": [
+              "arn:aws:elasticloadbalancing:ap-northeast-2:516268691817:targetgroup/followme-tg-blue/eb7d1aa08db7e2f0",
+              "arn:aws:elasticloadbalancing:ap-northeast-2:516268691817:targetgroup/followme-tg-green/b5e5a58fff12f7cf"
+            ],
+            "termination_policies": [],
+            "timeouts": null,
+            "traffic_source": [
+              {
+                "identifier": "arn:aws:elasticloadbalancing:ap-northeast-2:516268691817:targetgroup/followme-tg-blue/eb7d1aa08db7e2f0",
+                "type": "elbv2"
+              },
+              {
+                "identifier": "arn:aws:elasticloadbalancing:ap-northeast-2:516268691817:targetgroup/followme-tg-green/b5e5a58fff12f7cf",
+                "type": "elbv2"
+              }
+            ],
+            "vpc_zone_identifier": [
+              "subnet-032780bc131ce6300",
+              "subnet-0bbbcc093c21f2a44"
+            ],
+            "wait_for_capacity_timeout": "10m",
+            "wait_for_elb_capacity": null,
+            "warm_pool": [],
+            "warm_pool_size": 0
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiZGVsZXRlIjo2MDAwMDAwMDAwMDAsInVwZGF0ZSI6NjAwMDAwMDAwMDAwfSwic2NoZW1hX3ZlcnNpb24iOiIxIn0=",
+          "dependencies": [
+            "aws_iam_instance_profile.ec2_profile",
+            "aws_iam_role.ec2_s3_access",
+            "aws_key_pair.followme_key",
+            "aws_launch_template.followme_lt",
+            "aws_lb_target_group.followme_tg_blue",
+            "aws_lb_target_group.followme_tg_green",
+            "aws_security_group.ec2_sg",
+            "aws_subnet.subnet_a",
+            "aws_subnet.subnet_b",
+            "aws_vpc.vpc"
+          ],
+          "create_before_destroy": true
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_codebuild_project",
+      "name": "followme_project",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:codebuild:ap-northeast-2:516268691817:project/followme-build",
+            "artifacts": [
+              {
+                "artifact_identifier": "",
+                "bucket_owner_access": "",
+                "encryption_disabled": false,
+                "location": "",
+                "name": "",
+                "namespace_type": "",
+                "override_artifact_name": false,
+                "packaging": "",
+                "path": "",
+                "type": "NO_ARTIFACTS"
+              }
+            ],
+            "badge_enabled": false,
+            "badge_url": "",
+            "build_batch_config": [],
+            "build_timeout": 10,
+            "cache": [
+              {
+                "location": "",
+                "modes": [],
+                "type": "NO_CACHE"
+              }
+            ],
+            "concurrent_build_limit": 0,
+            "description": "Build project for FollowMe WAR packaging",
+            "encryption_key": "arn:aws:kms:ap-northeast-2:516268691817:alias/aws/s3",
+            "environment": [
+              {
+                "certificate": "",
+                "compute_type": "BUILD_GENERAL1_SMALL",
+                "docker_server": [],
+                "environment_variable": [
+                  {
+                    "name": "S3_BUCKET",
+                    "type": "PLAINTEXT",
+                    "value": "followme-deploy-bucket-jjo"
+                  }
+                ],
+                "fleet": [],
+                "image": "aws/codebuild/standard:5.0",
+                "image_pull_credentials_type": "CODEBUILD",
+                "privileged_mode": false,
+                "registry_credential": [],
+                "type": "LINUX_CONTAINER"
+              }
+            ],
+            "file_system_locations": [],
+            "id": "arn:aws:codebuild:ap-northeast-2:516268691817:project/followme-build",
+            "logs_config": [
+              {
+                "cloudwatch_logs": [
+                  {
+                    "group_name": "/aws/codebuild/followme-build",
+                    "status": "ENABLED",
+                    "stream_name": "build-log"
+                  }
+                ],
+                "s3_logs": [
+                  {
+                    "bucket_owner_access": "",
+                    "encryption_disabled": false,
+                    "location": "",
+                    "status": "DISABLED"
+                  }
+                ]
+              }
+            ],
+            "name": "followme-build",
+            "project_visibility": "PRIVATE",
+            "public_project_alias": "",
+            "queued_timeout": 480,
+            "region": "ap-northeast-2",
+            "resource_access_role": "",
+            "secondary_artifacts": [],
+            "secondary_source_version": [],
+            "secondary_sources": [],
+            "service_role": "arn:aws:iam::516268691817:role/followme-codebuild-role",
+            "source": [
+              {
+                "auth": [],
+                "build_status_config": [],
+                "buildspec": "",
+                "git_clone_depth": 1,
+                "git_submodules_config": [],
+                "insecure_ssl": false,
+                "location": "https://github.com/wjdwodhs/FollowMeProject.git",
+                "report_build_status": false,
+                "type": "GITHUB"
+              }
+            ],
+            "source_version": "main",
+            "tags": {},
+            "tags_all": {},
+            "vpc_config": []
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "arn": "arn:aws:codebuild:ap-northeast-2:516268691817:project/followme-build"
+          },
+          "private": "bnVsbA==",
+          "dependencies": [
+            "aws_iam_role.codebuild_role",
+            "aws_s3_bucket.followme_bucket"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_codedeploy_app",
+      "name": "followme_app",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "application_id": "eef12710-cac1-468a-b502-53abc9a255e6",
+            "arn": "arn:aws:codedeploy:ap-northeast-2:516268691817:application:followme-app",
+            "compute_platform": "Server",
+            "github_account_name": "",
+            "id": "eef12710-cac1-468a-b502-53abc9a255e6:followme-app",
+            "linked_to_github": false,
+            "name": "followme-app",
+            "region": "ap-northeast-2",
+            "tags": {},
+            "tags_all": {}
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA==",
+          "create_before_destroy": true
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_codedeploy_deployment_group",
+      "name": "followme_deployment_group",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "alarm_configuration": [],
+            "app_name": "followme-app",
+            "arn": "arn:aws:codedeploy:ap-northeast-2:516268691817:deploymentgroup:followme-app/followme-deployment-group",
+            "auto_rollback_configuration": [
+              {
+                "enabled": true,
+                "events": [
+                  "DEPLOYMENT_FAILURE"
+                ]
+              }
+            ],
+            "autoscaling_groups": [
+              "followme-asg"
+            ],
+            "blue_green_deployment_config": [
+              {
+                "deployment_ready_option": [
+                  {
+                    "action_on_timeout": "CONTINUE_DEPLOYMENT",
+                    "wait_time_in_minutes": 0
+                  }
+                ],
+                "green_fleet_provisioning_option": [
+                  {
+                    "action": "COPY_AUTO_SCALING_GROUP"
+                  }
+                ],
+                "terminate_blue_instances_on_deployment_success": [
+                  {
+                    "action": "TERMINATE",
+                    "termination_wait_time_in_minutes": 5
+                  }
+                ]
+              }
+            ],
+            "compute_platform": "Server",
+            "deployment_config_name": "CodeDeployDefault.AllAtOnce",
+            "deployment_group_id": "2bf43aaf-5dd9-40e8-8c5b-13000a456204",
+            "deployment_group_name": "followme-deployment-group",
+            "deployment_style": [
+              {
+                "deployment_option": "WITH_TRAFFIC_CONTROL",
+                "deployment_type": "BLUE_GREEN"
+              }
+            ],
+            "ec2_tag_filter": [],
+            "ec2_tag_set": [],
+            "ecs_service": [],
+            "id": "2bf43aaf-5dd9-40e8-8c5b-13000a456204",
+            "load_balancer_info": [
+              {
+                "elb_info": [],
+                "target_group_info": [],
+                "target_group_pair_info": [
+                  {
+                    "prod_traffic_route": [
+                      {
+                        "listener_arns": [
+                          "arn:aws:elasticloadbalancing:ap-northeast-2:516268691817:listener/app/followme-alb/b166e6a5e5ae4d02/2c27bc8aad647cff"
+                        ]
+                      }
+                    ],
+                    "target_group": [
+                      {
+                        "name": "followme-tg-blue"
+                      },
+                      {
+                        "name": "followme-tg-green"
+                      }
+                    ],
+                    "test_traffic_route": [
+                      {
+                        "listener_arns": [
+                          "arn:aws:elasticloadbalancing:ap-northeast-2:516268691817:listener/app/followme-alb/b166e6a5e5ae4d02/2c27bc8aad647cff"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "on_premises_instance_tag_filter": [],
+            "outdated_instances_strategy": "UPDATE",
+            "region": "ap-northeast-2",
+            "service_role_arn": "arn:aws:iam::516268691817:role/followme-codedeploy-role",
+            "tags": {},
+            "tags_all": {},
+            "termination_hook_enabled": false,
+            "trigger_configuration": []
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA==",
+          "dependencies": [
+            "aws_autoscaling_group.followme_asg",
+            "aws_codedeploy_app.followme_app",
+            "aws_iam_instance_profile.ec2_profile",
+            "aws_iam_role.codedeploy_role",
+            "aws_iam_role.ec2_s3_access",
+            "aws_key_pair.followme_key",
+            "aws_launch_template.followme_lt",
+            "aws_lb.followme_alb",
+            "aws_lb_listener.http_listener",
+            "aws_lb_target_group.followme_tg_blue",
+            "aws_lb_target_group.followme_tg_green",
+            "aws_security_group.ec2_sg",
+            "aws_subnet.subnet_a",
+            "aws_subnet.subnet_b",
+            "aws_vpc.vpc"
+          ],
+          "create_before_destroy": true
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_codepipeline",
+      "name": "followme_pipeline",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:codepipeline:ap-northeast-2:516268691817:followme-pipeline",
+            "artifact_store": [
+              {
+                "encryption_key": [],
+                "location": "followme-deploy-bucket-jjo",
+                "region": "",
+                "type": "S3"
+              }
+            ],
+            "execution_mode": "SUPERSEDED",
+            "id": "followme-pipeline",
+            "name": "followme-pipeline",
+            "pipeline_type": "V1",
+            "region": "ap-northeast-2",
+            "role_arn": "arn:aws:iam::516268691817:role/followme-codepipeline-role",
+            "stage": [
+              {
+                "action": [
+                  {
+                    "category": "Source",
+                    "configuration": {
+                      "BranchName": "main",
+                      "ConnectionArn": "arn:aws:codestar-connections:ap-northeast-2:516268691817:connection/68a39e98-1c7b-479f-b226-4cd23c3e2564",
+                      "DetectChanges": "true",
+                      "FullRepositoryId": "wjdwodhs/FollowMeProject"
+                    },
+                    "input_artifacts": [],
+                    "name": "Source",
+                    "namespace": "",
+                    "output_artifacts": [
+                      "source_output"
+                    ],
+                    "owner": "AWS",
+                    "provider": "CodeStarSourceConnection",
+                    "region": "",
+                    "role_arn": "",
+                    "run_order": 1,
+                    "timeout_in_minutes": 0,
+                    "version": "1"
+                  }
+                ],
+                "before_entry": [],
+                "name": "Source",
+                "on_failure": [],
+                "on_success": []
+              },
+              {
+                "action": [
+                  {
+                    "category": "Build",
+                    "configuration": {
+                      "ProjectName": "followme-build"
+                    },
+                    "input_artifacts": [
+                      "source_output"
+                    ],
+                    "name": "Build",
+                    "namespace": "",
+                    "output_artifacts": [
+                      "ROOT"
+                    ],
+                    "owner": "AWS",
+                    "provider": "CodeBuild",
+                    "region": "",
+                    "role_arn": "",
+                    "run_order": 1,
+                    "timeout_in_minutes": 0,
+                    "version": "1"
+                  }
+                ],
+                "before_entry": [],
+                "name": "Build",
+                "on_failure": [],
+                "on_success": []
+              },
+              {
+                "action": [
+                  {
+                    "category": "Deploy",
+                    "configuration": {
+                      "ApplicationName": "followme-app",
+                      "DeploymentGroupName": "followme-deployment-group"
+                    },
+                    "input_artifacts": [
+                      "ROOT"
+                    ],
+                    "name": "DeployToEC2",
+                    "namespace": "",
+                    "output_artifacts": [],
+                    "owner": "AWS",
+                    "provider": "CodeDeploy",
+                    "region": "",
+                    "role_arn": "",
+                    "run_order": 1,
+                    "timeout_in_minutes": 0,
+                    "version": "1"
+                  }
+                ],
+                "before_entry": [],
+                "name": "Deploy",
+                "on_failure": [],
+                "on_success": []
+              }
+            ],
+            "tags": {},
+            "tags_all": {},
+            "trigger": [],
+            "trigger_all": [],
+            "variable": []
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA==",
+          "dependencies": [
+            "aws_autoscaling_group.followme_asg",
+            "aws_codebuild_project.followme_project",
+            "aws_codedeploy_app.followme_app",
+            "aws_codedeploy_deployment_group.followme_deployment_group",
+            "aws_codestarconnections_connection.github",
+            "aws_iam_instance_profile.ec2_profile",
+            "aws_iam_role.codebuild_role",
+            "aws_iam_role.codedeploy_role",
+            "aws_iam_role.codepipeline_role",
+            "aws_iam_role.ec2_s3_access",
+            "aws_key_pair.followme_key",
+            "aws_launch_template.followme_lt",
+            "aws_lb.followme_alb",
+            "aws_lb_listener.http_listener",
+            "aws_lb_target_group.followme_tg_blue",
+            "aws_lb_target_group.followme_tg_green",
+            "aws_s3_bucket.followme_bucket",
+            "aws_security_group.ec2_sg",
+            "aws_subnet.subnet_a",
+            "aws_subnet.subnet_b",
+            "aws_vpc.vpc"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_codestarconnections_connection",
+      "name": "github",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:codestar-connections:ap-northeast-2:516268691817:connection/68a39e98-1c7b-479f-b226-4cd23c3e2564",
+            "connection_status": "AVAILABLE",
+            "host_arn": "",
+            "id": "arn:aws:codestar-connections:ap-northeast-2:516268691817:connection/68a39e98-1c7b-479f-b226-4cd23c3e2564",
+            "name": "github-connection",
+            "provider_type": "GitHub",
+            "region": "ap-northeast-2",
+            "tags": {},
+            "tags_all": {}
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "arn": "arn:aws:codestar-connections:ap-northeast-2:516268691817:connection/68a39e98-1c7b-479f-b226-4cd23c3e2564"
+          },
+          "private": "bnVsbA=="
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_iam_instance_profile",
+      "name": "ec2_profile",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:iam::516268691817:instance-profile/followme-ec2-profile",
+            "create_date": "2025-07-13T08:53:53Z",
+            "id": "followme-ec2-profile",
+            "name": "followme-ec2-profile",
+            "name_prefix": "",
+            "path": "/",
+            "role": "followme-ec2-s3-role",
+            "tags": {},
+            "tags_all": {},
+            "unique_id": "AIPAXQNADCFUT6Y5VYH4D"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA==",
+          "dependencies": [
+            "aws_iam_role.ec2_s3_access"
+          ],
+          "create_before_destroy": true
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_iam_policy",
+      "name": "codedeploy_access_policy",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:iam::516268691817:policy/followme-codedeploy-access",
+            "attachment_count": 1,
+            "description": "Allow EC2 to interact with CodeDeploy",
+            "id": "arn:aws:iam::516268691817:policy/followme-codedeploy-access",
+            "name": "followme-codedeploy-access",
+            "name_prefix": "",
+            "path": "/",
+            "policy": "{\"Statement\":[{\"Action\":[\"codedeploy:*\",\"logs:CreateLogGroup\",\"logs:CreateLogStream\",\"logs:PutLogEvents\"],\"Effect\":\"Allow\",\"Resource\":\"*\"}],\"Version\":\"2012-10-17\"}",
+            "policy_id": "ANPAXQNADCFUVOWYD6TO7",
+            "tags": {},
+            "tags_all": {}
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA=="
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_iam_policy",
+      "name": "codedeploy_bluegreen_policy",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:iam::516268691817:policy/codedeploy-bluegreen-policy",
+            "attachment_count": 1,
+            "description": "",
+            "id": "arn:aws:iam::516268691817:policy/codedeploy-bluegreen-policy",
+            "name": "codedeploy-bluegreen-policy",
+            "name_prefix": "",
+            "path": "/",
+            "policy": "{\"Statement\":[{\"Action\":[\"autoscaling:*\",\"ec2:*\",\"elasticloadbalancing:*\",\"codedeploy:*\",\"iam:PassRole\",\"s3:*\",\"cloudwatch:*\"],\"Effect\":\"Allow\",\"Resource\":\"*\"}],\"Version\":\"2012-10-17\"}",
+            "policy_id": "ANPAXQNADCFU72K6GY7O6",
+            "tags": {},
+            "tags_all": {}
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA=="
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_iam_policy",
+      "name": "s3_access_policy",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:iam::516268691817:policy/followme-s3-access-policy",
+            "attachment_count": 1,
+            "description": "Allow EC2 to access specific S3 bucket",
+            "id": "arn:aws:iam::516268691817:policy/followme-s3-access-policy",
+            "name": "followme-s3-access-policy",
+            "name_prefix": "",
+            "path": "/",
+            "policy": "{\"Statement\":[{\"Action\":[\"s3:GetObject\",\"s3:GetObjectVersion\",\"s3:ListBucket\",\"s3:GetBucketLocation\"],\"Effect\":\"Allow\",\"Resource\":[\"arn:aws:s3:::followme-deploy-bucket-jjo\",\"arn:aws:s3:::followme-deploy-bucket-jjo/*\"]}],\"Version\":\"2012-10-17\"}",
+            "policy_id": "ANPAXQNADCFUZVOMHVJ62",
+            "tags": {},
+            "tags_all": {}
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA=="
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_iam_role",
+      "name": "codebuild_role",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:iam::516268691817:role/followme-codebuild-role",
+            "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"codebuild.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+            "create_date": "2025-07-13T08:53:52Z",
+            "description": "",
+            "force_detach_policies": false,
+            "id": "followme-codebuild-role",
+            "inline_policy": [
+              {
+                "name": "followme-codebuild-policy",
+                "policy": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":[\"logs:CreateLogGroup\",\"logs:CreateLogStream\",\"logs:PutLogEvents\",\"s3:*\",\"codebuild:*\"],\"Effect\":\"Allow\",\"Resource\":\"*\"}]}"
+              }
+            ],
+            "managed_policy_arns": [],
+            "max_session_duration": 3600,
+            "name": "followme-codebuild-role",
+            "name_prefix": "",
+            "path": "/",
+            "permissions_boundary": "",
+            "tags": {},
+            "tags_all": {},
+            "unique_id": "AROAXQNADCFUWGCJD2III"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "516268691817",
+            "name": "followme-codebuild-role"
+          },
+          "private": "bnVsbA=="
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_iam_role",
+      "name": "codedeploy_role",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:iam::516268691817:role/followme-codedeploy-role",
+            "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"codedeploy.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+            "create_date": "2025-07-13T08:53:52Z",
+            "description": "",
+            "force_detach_policies": false,
+            "id": "followme-codedeploy-role",
+            "inline_policy": [],
+            "managed_policy_arns": [
+              "arn:aws:iam::516268691817:policy/codedeploy-bluegreen-policy",
+              "arn:aws:iam::aws:policy/service-role/AWSCodeDeployRole"
+            ],
+            "max_session_duration": 3600,
+            "name": "followme-codedeploy-role",
+            "name_prefix": "",
+            "path": "/",
+            "permissions_boundary": "",
+            "tags": {},
+            "tags_all": {},
+            "unique_id": "AROAXQNADCFU2A6FO2WER"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "516268691817",
+            "name": "followme-codedeploy-role"
+          },
+          "private": "bnVsbA==",
+          "create_before_destroy": true
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_iam_role",
+      "name": "codepipeline_role",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:iam::516268691817:role/followme-codepipeline-role",
+            "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"codepipeline.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+            "create_date": "2025-07-13T08:53:52Z",
+            "description": "",
+            "force_detach_policies": false,
+            "id": "followme-codepipeline-role",
+            "inline_policy": [
+              {
+                "name": "followme-codepipeline-policy",
+                "policy": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":[\"s3:*\",\"codebuild:*\",\"codestar-connections:UseConnection\"],\"Effect\":\"Allow\",\"Resource\":\"*\"},{\"Action\":[\"codedeploy:CreateDeployment\",\"codedeploy:GetDeployment\",\"codedeploy:RegisterApplicationRevision\",\"codedeploy:GetApplicationRevision\",\"codedeploy:GetDeploymentConfig\"],\"Effect\":\"Allow\",\"Resource\":\"*\"}]}"
+              }
+            ],
+            "managed_policy_arns": [],
+            "max_session_duration": 3600,
+            "name": "followme-codepipeline-role",
+            "name_prefix": "",
+            "path": "/",
+            "permissions_boundary": "",
+            "tags": {},
+            "tags_all": {},
+            "unique_id": "AROAXQNADCFUUADGECX7H"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "516268691817",
+            "name": "followme-codepipeline-role"
+          },
+          "private": "bnVsbA=="
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_iam_role",
+      "name": "ec2_s3_access",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:iam::516268691817:role/followme-ec2-s3-role",
+            "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ec2.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+            "create_date": "2025-07-13T08:53:52Z",
+            "description": "",
+            "force_detach_policies": false,
+            "id": "followme-ec2-s3-role",
+            "inline_policy": [],
+            "managed_policy_arns": [
+              "arn:aws:iam::516268691817:policy/followme-codedeploy-access",
+              "arn:aws:iam::516268691817:policy/followme-s3-access-policy"
+            ],
+            "max_session_duration": 3600,
+            "name": "followme-ec2-s3-role",
+            "name_prefix": "",
+            "path": "/",
+            "permissions_boundary": "",
+            "tags": {},
+            "tags_all": {},
+            "unique_id": "AROAXQNADCFUWI44PPTWG"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "516268691817",
+            "name": "followme-ec2-s3-role"
+          },
+          "private": "bnVsbA==",
+          "create_before_destroy": true
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_iam_role_policy",
+      "name": "codebuild_policy",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "id": "followme-codebuild-role:followme-codebuild-policy",
+            "name": "followme-codebuild-policy",
+            "name_prefix": "",
+            "policy": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":[\"logs:CreateLogGroup\",\"logs:CreateLogStream\",\"logs:PutLogEvents\",\"s3:*\",\"codebuild:*\"],\"Effect\":\"Allow\",\"Resource\":\"*\"}]}",
+            "role": "followme-codebuild-role"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "516268691817",
+            "name": "followme-codebuild-policy",
+            "role": "followme-codebuild-role"
+          },
+          "private": "bnVsbA==",
+          "dependencies": [
+            "aws_iam_role.codebuild_role"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_iam_role_policy",
+      "name": "codepipeline_policy",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "id": "followme-codepipeline-role:followme-codepipeline-policy",
+            "name": "followme-codepipeline-policy",
+            "name_prefix": "",
+            "policy": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":[\"s3:*\",\"codebuild:*\",\"codestar-connections:UseConnection\"],\"Effect\":\"Allow\",\"Resource\":\"*\"},{\"Action\":[\"codedeploy:CreateDeployment\",\"codedeploy:GetDeployment\",\"codedeploy:RegisterApplicationRevision\",\"codedeploy:GetApplicationRevision\",\"codedeploy:GetDeploymentConfig\"],\"Effect\":\"Allow\",\"Resource\":\"*\"}]}",
+            "role": "followme-codepipeline-role"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "516268691817",
+            "name": "followme-codepipeline-policy",
+            "role": "followme-codepipeline-role"
+          },
+          "private": "bnVsbA==",
+          "dependencies": [
+            "aws_iam_role.codepipeline_role"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_iam_role_policy_attachment",
+      "name": "attach_codedeploy_policy",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "id": "followme-ec2-s3-role/arn:aws:iam::516268691817:policy/followme-codedeploy-access",
+            "policy_arn": "arn:aws:iam::516268691817:policy/followme-codedeploy-access",
+            "role": "followme-ec2-s3-role"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "516268691817",
+            "policy_arn": "arn:aws:iam::516268691817:policy/followme-codedeploy-access",
+            "role": "followme-ec2-s3-role"
+          },
+          "private": "bnVsbA==",
+          "dependencies": [
+            "aws_iam_policy.codedeploy_access_policy",
+            "aws_iam_role.ec2_s3_access"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_iam_role_policy_attachment",
+      "name": "attach_s3_policy",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "id": "followme-ec2-s3-role/arn:aws:iam::516268691817:policy/followme-s3-access-policy",
+            "policy_arn": "arn:aws:iam::516268691817:policy/followme-s3-access-policy",
+            "role": "followme-ec2-s3-role"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "516268691817",
+            "policy_arn": "arn:aws:iam::516268691817:policy/followme-s3-access-policy",
+            "role": "followme-ec2-s3-role"
+          },
+          "private": "bnVsbA==",
+          "dependencies": [
+            "aws_iam_policy.s3_access_policy",
+            "aws_iam_role.ec2_s3_access"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_iam_role_policy_attachment",
+      "name": "codedeploy_bluegreen_policy_attach",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "id": "followme-codedeploy-role/arn:aws:iam::516268691817:policy/codedeploy-bluegreen-policy",
+            "policy_arn": "arn:aws:iam::516268691817:policy/codedeploy-bluegreen-policy",
+            "role": "followme-codedeploy-role"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "516268691817",
+            "policy_arn": "arn:aws:iam::516268691817:policy/codedeploy-bluegreen-policy",
+            "role": "followme-codedeploy-role"
+          },
+          "private": "bnVsbA==",
+          "dependencies": [
+            "aws_iam_policy.codedeploy_bluegreen_policy",
+            "aws_iam_role.codedeploy_role"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_iam_role_policy_attachment",
+      "name": "codedeploy_policy_attach",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "id": "followme-codedeploy-role/arn:aws:iam::aws:policy/service-role/AWSCodeDeployRole",
+            "policy_arn": "arn:aws:iam::aws:policy/service-role/AWSCodeDeployRole",
+            "role": "followme-codedeploy-role"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "516268691817",
+            "policy_arn": "arn:aws:iam::aws:policy/service-role/AWSCodeDeployRole",
+            "role": "followme-codedeploy-role"
+          },
+          "private": "bnVsbA==",
+          "dependencies": [
+            "aws_iam_role.codedeploy_role"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_internet_gateway",
+      "name": "igw",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:ec2:ap-northeast-2:516268691817:internet-gateway/igw-07e82bd1830830ab1",
+            "id": "igw-07e82bd1830830ab1",
+            "owner_id": "516268691817",
+            "region": "ap-northeast-2",
+            "tags": {},
+            "tags_all": {},
+            "timeouts": null,
+            "vpc_id": "vpc-051957e214917670b"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxMjAwMDAwMDAwMDAwLCJkZWxldGUiOjEyMDAwMDAwMDAwMDAsInVwZGF0ZSI6MTIwMDAwMDAwMDAwMH19",
+          "dependencies": [
+            "aws_vpc.vpc"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_key_pair",
+      "name": "followme_key",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 1,
+          "attributes": {
+            "arn": "arn:aws:ec2:ap-northeast-2:516268691817:key-pair/followme-key",
+            "fingerprint": "a3:36:e7:cf:e2:8b:d5:f0:43:13:21:e3:a5:90:cd:2d",
+            "id": "followme-key",
+            "key_name": "followme-key",
+            "key_name_prefix": "",
+            "key_pair_id": "key-0a3265ee10590cc86",
+            "key_type": "rsa",
+            "public_key": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCgvrxjrk1CanJqXTKvRAXCx8zTb6IdU2IQwgBBIsKalsSij4DMw5q9lknQTwkCPSc4giasqphtXoFiBwj23mIJox07OFBqsBMRPniONgc+yFUhb8wpc2zCv6/rnjSe+IDl+6Hawg5B96U6vP+rBzQ12t9YyZlv2dGmo4NCni6aYyf00d5bmpxBozpPSQSTt7i34mR5ZDhM08AlX47U8dtY5KTIvGqB+6jzHN0w6XG80RlzqG3qGS6KOatd5oru6oxle6x6eNN5d1zkmpQ2YitNvTummYYrJI6+mlZ6q6oaCflo4xteYJCADVDLgGAY46tug2q7C/02GwC+Fc+EMjoF jjo@LAPTOP-VSH34SCE",
+            "region": "ap-northeast-2",
+            "tags": {
+              "description": "Key pair generated by Terraform"
+            },
+            "tags_all": {
+              "description": "Key pair generated by Terraform"
+            }
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJzY2hlbWFfdmVyc2lvbiI6IjEifQ==",
+          "create_before_destroy": true
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_launch_template",
+      "name": "followme_lt",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:ec2:ap-northeast-2:516268691817:launch-template/lt-0446ee6ec4ec9f78f",
+            "block_device_mappings": [],
+            "capacity_reservation_specification": [],
+            "cpu_options": [],
+            "credit_specification": [],
+            "default_version": 1,
+            "description": "",
+            "disable_api_stop": false,
+            "disable_api_termination": false,
+            "ebs_optimized": "",
+            "enclave_options": [],
+            "hibernation_options": [],
+            "iam_instance_profile": [
+              {
+                "arn": "",
+                "name": "followme-ec2-profile"
+              }
+            ],
+            "id": "lt-0446ee6ec4ec9f78f",
+            "image_id": "ami-0daee08993156ca1a",
+            "instance_initiated_shutdown_behavior": "",
+            "instance_market_options": [],
+            "instance_requirements": [],
+            "instance_type": "t2.micro",
+            "kernel_id": "",
+            "key_name": "followme-key",
+            "latest_version": 1,
+            "license_specification": [],
+            "maintenance_options": [],
+            "metadata_options": [],
+            "monitoring": [],
+            "name": "followme-lt-20250713085400226500000002",
+            "name_prefix": "followme-lt-",
+            "network_interfaces": [],
+            "placement": [],
+            "private_dns_name_options": [],
+            "ram_disk_id": "",
+            "region": "ap-northeast-2",
+            "security_group_names": [],
+            "tag_specifications": [
+              {
+                "resource_type": "instance",
+                "tags": {
+                  "Name": "followme-instance"
+                }
+              }
+            ],
+            "tags": {},
+            "tags_all": {},
+            "update_default_version": null,
+            "user_data": "IyEvYmluL2Jhc2gNCnNldCAtZQ0KDQp5dW0gdXBkYXRlIC15DQphbWF6b24tbGludXgtZXh0cmFzIGVuYWJsZSBqYXZhLW9wZW5qZGsxMQ0KeXVtIGluc3RhbGwgLXkgamF2YS0xMS1vcGVuamRrIHdnZXQgdGFyIHJ1YnkNCg0KIyBUb21jYXQg7ISk7LmYDQpjZCAvb3B0DQp3Z2V0IGh0dHBzOi8vZGxjZG4uYXBhY2hlLm9yZy90b21jYXQvdG9tY2F0LTkvdjkuMC4xMDcvYmluL2FwYWNoZS10b21jYXQtOS4wLjEwNy50YXIuZ3oNCnRhciAteHpmIGFwYWNoZS10b21jYXQtOS4wLjEwNy50YXIuZ3oNCm12IGFwYWNoZS10b21jYXQtOS4wLjEwNyB0b21jYXQ5DQpjaG1vZCAtUiAreCAvb3B0L3RvbWNhdDkvYmluDQpjaG93biAtUiBlYzItdXNlcjplYzItdXNlciAvb3B0L3RvbWNhdDkNCg0KIyBDb2RlRGVwbG95IEFnZW50IOyEpOy5mA0KY2QgL2hvbWUvZWMyLXVzZXINCndnZXQgaHR0cHM6Ly9hd3MtY29kZWRlcGxveS1hcC1ub3J0aGVhc3QtMi5zMy5hcC1ub3J0aGVhc3QtMi5hbWF6b25hd3MuY29tL2xhdGVzdC9pbnN0YWxsDQpjaG1vZCAreCAuL2luc3RhbGwNCi4vaW5zdGFsbCBhdXRvDQpzeXN0ZW1jdGwgc3RhcnQgY29kZWRlcGxveS1hZ2VudA0Kc3lzdGVtY3RsIGVuYWJsZSBjb2RlZGVwbG95LWFnZW50DQoNCg0KIyDroZzqt7gg6rK966GcIO2ZleyduOyaqSDrlJTroInthqDrpqwg7IOd7ISxDQpta2RpciAtcCAvb3B0L2NvZGVkZXBsb3ktYXBwDQpjaG93biBlYzItdXNlcjplYzItdXNlciAvb3B0L2NvZGVkZXBsb3ktYXBwDQoNCg==",
+            "vpc_security_group_ids": [
+              "sg-0523ede38ba8f926d"
+            ]
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA==",
+          "dependencies": [
+            "aws_iam_instance_profile.ec2_profile",
+            "aws_iam_role.ec2_s3_access",
+            "aws_key_pair.followme_key",
+            "aws_security_group.ec2_sg",
+            "aws_vpc.vpc"
+          ],
+          "create_before_destroy": true
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_lb",
+      "name": "followme_alb",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "access_logs": [
+              {
+                "bucket": "",
+                "enabled": false,
+                "prefix": ""
+              }
+            ],
+            "arn": "arn:aws:elasticloadbalancing:ap-northeast-2:516268691817:loadbalancer/app/followme-alb/b166e6a5e5ae4d02",
+            "arn_suffix": "app/followme-alb/b166e6a5e5ae4d02",
+            "client_keep_alive": 3600,
+            "connection_logs": [
+              {
+                "bucket": "",
+                "enabled": false,
+                "prefix": ""
+              }
+            ],
+            "customer_owned_ipv4_pool": "",
+            "desync_mitigation_mode": "defensive",
+            "dns_name": "followme-alb-1495553964.ap-northeast-2.elb.amazonaws.com",
+            "dns_record_client_routing_policy": null,
+            "drop_invalid_header_fields": false,
+            "enable_cross_zone_load_balancing": true,
+            "enable_deletion_protection": false,
+            "enable_http2": true,
+            "enable_tls_version_and_cipher_suite_headers": false,
+            "enable_waf_fail_open": false,
+            "enable_xff_client_port": false,
+            "enable_zonal_shift": false,
+            "enforce_security_group_inbound_rules_on_private_link_traffic": "",
+            "id": "arn:aws:elasticloadbalancing:ap-northeast-2:516268691817:loadbalancer/app/followme-alb/b166e6a5e5ae4d02",
+            "idle_timeout": 60,
+            "internal": false,
+            "ip_address_type": "ipv4",
+            "ipam_pools": [],
+            "load_balancer_type": "application",
+            "minimum_load_balancer_capacity": [],
+            "name": "followme-alb",
+            "name_prefix": "",
+            "preserve_host_header": false,
+            "region": "ap-northeast-2",
+            "security_groups": [
+              "sg-0523ede38ba8f926d"
+            ],
+            "subnet_mapping": [
+              {
+                "allocation_id": "",
+                "ipv6_address": "",
+                "outpost_id": "",
+                "private_ipv4_address": "",
+                "subnet_id": "subnet-032780bc131ce6300"
+              },
+              {
+                "allocation_id": "",
+                "ipv6_address": "",
+                "outpost_id": "",
+                "private_ipv4_address": "",
+                "subnet_id": "subnet-0bbbcc093c21f2a44"
+              }
+            ],
+            "subnets": [
+              "subnet-032780bc131ce6300",
+              "subnet-0bbbcc093c21f2a44"
+            ],
+            "tags": {
+              "Name": "followme-alb"
+            },
+            "tags_all": {
+              "Name": "followme-alb"
+            },
+            "timeouts": null,
+            "vpc_id": "vpc-051957e214917670b",
+            "xff_header_processing_mode": "append",
+            "zone_id": "ZWKZPGTI48KDX"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "arn": "arn:aws:elasticloadbalancing:ap-northeast-2:516268691817:loadbalancer/app/followme-alb/b166e6a5e5ae4d02"
+          },
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjo2MDAwMDAwMDAwMDAsImRlbGV0ZSI6NjAwMDAwMDAwMDAwLCJ1cGRhdGUiOjYwMDAwMDAwMDAwMH19",
+          "dependencies": [
+            "aws_security_group.ec2_sg",
+            "aws_subnet.subnet_a",
+            "aws_subnet.subnet_b",
+            "aws_vpc.vpc"
+          ],
+          "create_before_destroy": true
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_lb_listener",
+      "name": "http_listener",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "alpn_policy": null,
+            "arn": "arn:aws:elasticloadbalancing:ap-northeast-2:516268691817:listener/app/followme-alb/b166e6a5e5ae4d02/2c27bc8aad647cff",
+            "certificate_arn": null,
+            "default_action": [
+              {
+                "authenticate_cognito": [],
+                "authenticate_oidc": [],
+                "fixed_response": [],
+                "forward": [],
+                "order": 1,
+                "redirect": [],
+                "target_group_arn": "arn:aws:elasticloadbalancing:ap-northeast-2:516268691817:targetgroup/followme-tg-blue/eb7d1aa08db7e2f0",
+                "type": "forward"
+              }
+            ],
+            "id": "arn:aws:elasticloadbalancing:ap-northeast-2:516268691817:listener/app/followme-alb/b166e6a5e5ae4d02/2c27bc8aad647cff",
+            "load_balancer_arn": "arn:aws:elasticloadbalancing:ap-northeast-2:516268691817:loadbalancer/app/followme-alb/b166e6a5e5ae4d02",
+            "mutual_authentication": [],
+            "port": 80,
+            "protocol": "HTTP",
+            "region": "ap-northeast-2",
+            "routing_http_request_x_amzn_mtls_clientcert_header_name": null,
+            "routing_http_request_x_amzn_mtls_clientcert_issuer_header_name": null,
+            "routing_http_request_x_amzn_mtls_clientcert_leaf_header_name": null,
+            "routing_http_request_x_amzn_mtls_clientcert_serial_number_header_name": null,
+            "routing_http_request_x_amzn_mtls_clientcert_subject_header_name": null,
+            "routing_http_request_x_amzn_mtls_clientcert_validity_header_name": null,
+            "routing_http_request_x_amzn_tls_cipher_suite_header_name": null,
+            "routing_http_request_x_amzn_tls_version_header_name": null,
+            "routing_http_response_access_control_allow_credentials_header_value": "",
+            "routing_http_response_access_control_allow_headers_header_value": "",
+            "routing_http_response_access_control_allow_methods_header_value": "",
+            "routing_http_response_access_control_allow_origin_header_value": "",
+            "routing_http_response_access_control_expose_headers_header_value": "",
+            "routing_http_response_access_control_max_age_header_value": "",
+            "routing_http_response_content_security_policy_header_value": "",
+            "routing_http_response_server_enabled": true,
+            "routing_http_response_strict_transport_security_header_value": "",
+            "routing_http_response_x_content_type_options_header_value": "",
+            "routing_http_response_x_frame_options_header_value": "",
+            "ssl_policy": "",
+            "tags": {},
+            "tags_all": {},
+            "tcp_idle_timeout_seconds": null,
+            "timeouts": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjozMDAwMDAwMDAwMDAsInVwZGF0ZSI6MzAwMDAwMDAwMDAwfX0=",
+          "dependencies": [
+            "aws_lb.followme_alb",
+            "aws_lb_target_group.followme_tg_blue",
+            "aws_security_group.ec2_sg",
+            "aws_subnet.subnet_a",
+            "aws_subnet.subnet_b",
+            "aws_vpc.vpc"
+          ],
+          "create_before_destroy": true
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_lb_target_group",
+      "name": "followme_tg_blue",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:elasticloadbalancing:ap-northeast-2:516268691817:targetgroup/followme-tg-blue/eb7d1aa08db7e2f0",
+            "arn_suffix": "targetgroup/followme-tg-blue/eb7d1aa08db7e2f0",
+            "connection_termination": null,
+            "deregistration_delay": "300",
+            "health_check": [
+              {
+                "enabled": true,
+                "healthy_threshold": 2,
+                "interval": 30,
+                "matcher": "200-399",
+                "path": "/healthcheck.jsp",
+                "port": "traffic-port",
+                "protocol": "HTTP",
+                "timeout": 5,
+                "unhealthy_threshold": 2
+              }
+            ],
+            "id": "arn:aws:elasticloadbalancing:ap-northeast-2:516268691817:targetgroup/followme-tg-blue/eb7d1aa08db7e2f0",
+            "ip_address_type": "ipv4",
+            "lambda_multi_value_headers_enabled": false,
+            "load_balancer_arns": [
+              "arn:aws:elasticloadbalancing:ap-northeast-2:516268691817:loadbalancer/app/followme-alb/b166e6a5e5ae4d02"
+            ],
+            "load_balancing_algorithm_type": "round_robin",
+            "load_balancing_anomaly_mitigation": "off",
+            "load_balancing_cross_zone_enabled": "use_load_balancer_configuration",
+            "name": "followme-tg-blue",
+            "name_prefix": "",
+            "port": 8080,
+            "preserve_client_ip": null,
+            "protocol": "HTTP",
+            "protocol_version": "HTTP1",
+            "proxy_protocol_v2": false,
+            "region": "ap-northeast-2",
+            "slow_start": 0,
+            "stickiness": [
+              {
+                "cookie_duration": 86400,
+                "cookie_name": "",
+                "enabled": false,
+                "type": "lb_cookie"
+              }
+            ],
+            "tags": {},
+            "tags_all": {},
+            "target_failover": [
+              {
+                "on_deregistration": null,
+                "on_unhealthy": null
+              }
+            ],
+            "target_group_health": [
+              {
+                "dns_failover": [
+                  {
+                    "minimum_healthy_targets_count": "1",
+                    "minimum_healthy_targets_percentage": "off"
+                  }
+                ],
+                "unhealthy_state_routing": [
+                  {
+                    "minimum_healthy_targets_count": 1,
+                    "minimum_healthy_targets_percentage": "off"
+                  }
+                ]
+              }
+            ],
+            "target_health_state": [
+              {
+                "enable_unhealthy_connection_termination": null,
+                "unhealthy_draining_interval": null
+              }
+            ],
+            "target_type": "instance",
+            "vpc_id": "vpc-051957e214917670b"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA==",
+          "dependencies": [
+            "aws_vpc.vpc"
+          ],
+          "create_before_destroy": true
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_lb_target_group",
+      "name": "followme_tg_green",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:elasticloadbalancing:ap-northeast-2:516268691817:targetgroup/followme-tg-green/b5e5a58fff12f7cf",
+            "arn_suffix": "targetgroup/followme-tg-green/b5e5a58fff12f7cf",
+            "connection_termination": null,
+            "deregistration_delay": "300",
+            "health_check": [
+              {
+                "enabled": true,
+                "healthy_threshold": 2,
+                "interval": 30,
+                "matcher": "200-399",
+                "path": "/healthcheck.jsp",
+                "port": "traffic-port",
+                "protocol": "HTTP",
+                "timeout": 5,
+                "unhealthy_threshold": 2
+              }
+            ],
+            "id": "arn:aws:elasticloadbalancing:ap-northeast-2:516268691817:targetgroup/followme-tg-green/b5e5a58fff12f7cf",
+            "ip_address_type": "ipv4",
+            "lambda_multi_value_headers_enabled": false,
+            "load_balancer_arns": [],
+            "load_balancing_algorithm_type": "round_robin",
+            "load_balancing_anomaly_mitigation": "off",
+            "load_balancing_cross_zone_enabled": "use_load_balancer_configuration",
+            "name": "followme-tg-green",
+            "name_prefix": "",
+            "port": 8080,
+            "preserve_client_ip": null,
+            "protocol": "HTTP",
+            "protocol_version": "HTTP1",
+            "proxy_protocol_v2": false,
+            "region": "ap-northeast-2",
+            "slow_start": 0,
+            "stickiness": [
+              {
+                "cookie_duration": 86400,
+                "cookie_name": "",
+                "enabled": false,
+                "type": "lb_cookie"
+              }
+            ],
+            "tags": {},
+            "tags_all": {},
+            "target_failover": [
+              {
+                "on_deregistration": null,
+                "on_unhealthy": null
+              }
+            ],
+            "target_group_health": [
+              {
+                "dns_failover": [
+                  {
+                    "minimum_healthy_targets_count": "1",
+                    "minimum_healthy_targets_percentage": "off"
+                  }
+                ],
+                "unhealthy_state_routing": [
+                  {
+                    "minimum_healthy_targets_count": 1,
+                    "minimum_healthy_targets_percentage": "off"
+                  }
+                ]
+              }
+            ],
+            "target_health_state": [
+              {
+                "enable_unhealthy_connection_termination": null,
+                "unhealthy_draining_interval": null
+              }
+            ],
+            "target_type": "instance",
+            "vpc_id": "vpc-051957e214917670b"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA==",
+          "dependencies": [
+            "aws_vpc.vpc"
+          ],
+          "create_before_destroy": true
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_route_table",
+      "name": "rt",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:ec2:ap-northeast-2:516268691817:route-table/rtb-0929090877ec370f6",
+            "id": "rtb-0929090877ec370f6",
+            "owner_id": "516268691817",
+            "propagating_vgws": [],
+            "region": "ap-northeast-2",
+            "route": [
+              {
+                "carrier_gateway_id": "",
+                "cidr_block": "0.0.0.0/0",
+                "core_network_arn": "",
+                "destination_prefix_list_id": "",
+                "egress_only_gateway_id": "",
+                "gateway_id": "igw-07e82bd1830830ab1",
+                "ipv6_cidr_block": "",
+                "local_gateway_id": "",
+                "nat_gateway_id": "",
+                "network_interface_id": "",
+                "transit_gateway_id": "",
+                "vpc_endpoint_id": "",
+                "vpc_peering_connection_id": ""
+              }
+            ],
+            "tags": {},
+            "tags_all": {},
+            "timeouts": null,
+            "vpc_id": "vpc-051957e214917670b"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjozMDAwMDAwMDAwMDAsImRlbGV0ZSI6MzAwMDAwMDAwMDAwLCJ1cGRhdGUiOjEyMDAwMDAwMDAwMH19",
+          "dependencies": [
+            "aws_internet_gateway.igw",
+            "aws_vpc.vpc"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_route_table_association",
+      "name": "rta_a",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "gateway_id": "",
+            "id": "rtbassoc-023dd4fbcb21ab786",
+            "region": "ap-northeast-2",
+            "route_table_id": "rtb-0929090877ec370f6",
+            "subnet_id": "subnet-032780bc131ce6300",
+            "timeouts": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjozMDAwMDAwMDAwMDAsImRlbGV0ZSI6MzAwMDAwMDAwMDAwLCJ1cGRhdGUiOjEyMDAwMDAwMDAwMH19",
+          "dependencies": [
+            "aws_internet_gateway.igw",
+            "aws_route_table.rt",
+            "aws_subnet.subnet_a",
+            "aws_vpc.vpc"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_route_table_association",
+      "name": "rta_b",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "gateway_id": "",
+            "id": "rtbassoc-08c136fa65f9dc4b8",
+            "region": "ap-northeast-2",
+            "route_table_id": "rtb-0929090877ec370f6",
+            "subnet_id": "subnet-0bbbcc093c21f2a44",
+            "timeouts": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjozMDAwMDAwMDAwMDAsImRlbGV0ZSI6MzAwMDAwMDAwMDAwLCJ1cGRhdGUiOjEyMDAwMDAwMDAwMH19",
+          "dependencies": [
+            "aws_internet_gateway.igw",
+            "aws_route_table.rt",
+            "aws_subnet.subnet_b",
+            "aws_vpc.vpc"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_s3_bucket",
+      "name": "followme_bucket",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "acceleration_status": "",
+            "acl": null,
+            "arn": "arn:aws:s3:::followme-deploy-bucket-jjo",
+            "bucket": "followme-deploy-bucket-jjo",
+            "bucket_domain_name": "followme-deploy-bucket-jjo.s3.amazonaws.com",
+            "bucket_prefix": "",
+            "bucket_region": "ap-northeast-2",
+            "bucket_regional_domain_name": "followme-deploy-bucket-jjo.s3.ap-northeast-2.amazonaws.com",
+            "cors_rule": [],
+            "force_destroy": true,
+            "grant": [
+              {
+                "id": "3b1ae100acbe159132b49459bf8c5d34aaa0ced9ca17d1ef32c87d411162bfdd",
+                "permissions": [
+                  "FULL_CONTROL"
+                ],
+                "type": "CanonicalUser",
+                "uri": ""
+              }
+            ],
+            "hosted_zone_id": "Z3W03O7B5YMIYP",
+            "id": "followme-deploy-bucket-jjo",
+            "lifecycle_rule": [],
+            "logging": [],
+            "object_lock_configuration": [],
+            "object_lock_enabled": false,
+            "policy": "",
+            "region": "ap-northeast-2",
+            "replication_configuration": [],
+            "request_payer": "BucketOwner",
+            "server_side_encryption_configuration": [
+              {
+                "rule": [
+                  {
+                    "apply_server_side_encryption_by_default": [
+                      {
+                        "kms_master_key_id": "",
+                        "sse_algorithm": "AES256"
+                      }
+                    ],
+                    "bucket_key_enabled": false
+                  }
+                ]
+              }
+            ],
+            "tags": {
+              "Environment": "dev",
+              "Name": "FollowMeDeployBucket"
+            },
+            "tags_all": {
+              "Environment": "dev",
+              "Name": "FollowMeDeployBucket"
+            },
+            "timeouts": null,
+            "versioning": [
+              {
+                "enabled": true,
+                "mfa_delete": false
+              }
+            ],
+            "website": [],
+            "website_domain": null,
+            "website_endpoint": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "516268691817",
+            "bucket": "followme-deploy-bucket-jjo",
+            "region": "ap-northeast-2"
+          },
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxMjAwMDAwMDAwMDAwLCJkZWxldGUiOjM2MDAwMDAwMDAwMDAsInJlYWQiOjEyMDAwMDAwMDAwMDAsInVwZGF0ZSI6MTIwMDAwMDAwMDAwMH19"
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_s3_bucket_ownership_controls",
+      "name": "followme_bucket",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "bucket": "followme-deploy-bucket-jjo",
+            "id": "followme-deploy-bucket-jjo",
+            "region": "ap-northeast-2",
+            "rule": [
+              {
+                "object_ownership": "BucketOwnerPreferred"
+              }
+            ]
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA==",
+          "dependencies": [
+            "aws_s3_bucket.followme_bucket"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_s3_bucket_public_access_block",
+      "name": "followme_bucket",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "block_public_acls": true,
+            "block_public_policy": true,
+            "bucket": "followme-deploy-bucket-jjo",
+            "id": "followme-deploy-bucket-jjo",
+            "ignore_public_acls": true,
+            "region": "ap-northeast-2",
+            "restrict_public_buckets": true
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA==",
+          "dependencies": [
+            "aws_s3_bucket.followme_bucket"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_s3_bucket_versioning",
+      "name": "followme_bucket",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "bucket": "followme-deploy-bucket-jjo",
+            "expected_bucket_owner": "",
+            "id": "followme-deploy-bucket-jjo",
+            "mfa": null,
+            "region": "ap-northeast-2",
+            "versioning_configuration": [
+              {
+                "mfa_delete": "",
+                "status": "Enabled"
+              }
+            ]
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA==",
+          "dependencies": [
+            "aws_s3_bucket.followme_bucket"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_security_group",
+      "name": "alb_sg",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 1,
+          "attributes": {
+            "arn": "arn:aws:ec2:ap-northeast-2:516268691817:security-group/sg-0487d872dfcb3c49a",
+            "description": "Managed by Terraform",
+            "egress": [
+              {
+                "cidr_blocks": [
+                  "0.0.0.0/0"
+                ],
+                "description": "",
+                "from_port": 0,
+                "ipv6_cidr_blocks": [],
+                "prefix_list_ids": [],
+                "protocol": "-1",
+                "security_groups": [],
+                "self": false,
+                "to_port": 0
+              }
+            ],
+            "id": "sg-0487d872dfcb3c49a",
+            "ingress": [
+              {
+                "cidr_blocks": [
+                  "0.0.0.0/0"
+                ],
+                "description": "",
+                "from_port": 80,
+                "ipv6_cidr_blocks": [],
+                "prefix_list_ids": [],
+                "protocol": "tcp",
+                "security_groups": [],
+                "self": false,
+                "to_port": 80
+              }
+            ],
+            "name": "followme-alb-sg",
+            "name_prefix": "",
+            "owner_id": "516268691817",
+            "region": "ap-northeast-2",
+            "revoke_rules_on_delete": false,
+            "tags": {
+              "Name": "followme-alb-sg"
+            },
+            "tags_all": {
+              "Name": "followme-alb-sg"
+            },
+            "timeouts": null,
+            "vpc_id": "vpc-051957e214917670b"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjo2MDAwMDAwMDAwMDAsImRlbGV0ZSI6OTAwMDAwMDAwMDAwfSwic2NoZW1hX3ZlcnNpb24iOiIxIn0=",
+          "dependencies": [
+            "aws_vpc.vpc"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_security_group",
+      "name": "ec2_sg",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 1,
+          "attributes": {
+            "arn": "arn:aws:ec2:ap-northeast-2:516268691817:security-group/sg-0523ede38ba8f926d",
+            "description": "Managed by Terraform",
+            "egress": [
+              {
+                "cidr_blocks": [
+                  "0.0.0.0/0"
+                ],
+                "description": "",
+                "from_port": 0,
+                "ipv6_cidr_blocks": [],
+                "prefix_list_ids": [],
+                "protocol": "-1",
+                "security_groups": [],
+                "self": false,
+                "to_port": 0
+              }
+            ],
+            "id": "sg-0523ede38ba8f926d",
+            "ingress": [
+              {
+                "cidr_blocks": [
+                  "0.0.0.0/0"
+                ],
+                "description": "",
+                "from_port": 22,
+                "ipv6_cidr_blocks": [],
+                "prefix_list_ids": [],
+                "protocol": "tcp",
+                "security_groups": [],
+                "self": false,
+                "to_port": 22
+              },
+              {
+                "cidr_blocks": [
+                  "0.0.0.0/0"
+                ],
+                "description": "",
+                "from_port": 8080,
+                "ipv6_cidr_blocks": [],
+                "prefix_list_ids": [],
+                "protocol": "tcp",
+                "security_groups": [],
+                "self": false,
+                "to_port": 8080
+              }
+            ],
+            "name": "allow_ssh_http",
+            "name_prefix": "",
+            "owner_id": "516268691817",
+            "region": "ap-northeast-2",
+            "revoke_rules_on_delete": false,
+            "tags": {
+              "Name": "followme-ec2-sg"
+            },
+            "tags_all": {
+              "Name": "followme-ec2-sg"
+            },
+            "timeouts": null,
+            "vpc_id": "vpc-051957e214917670b"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjo2MDAwMDAwMDAwMDAsImRlbGV0ZSI6OTAwMDAwMDAwMDAwfSwic2NoZW1hX3ZlcnNpb24iOiIxIn0=",
+          "dependencies": [
+            "aws_vpc.vpc"
+          ],
+          "create_before_destroy": true
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_subnet",
+      "name": "subnet_a",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 1,
+          "attributes": {
+            "arn": "arn:aws:ec2:ap-northeast-2:516268691817:subnet/subnet-032780bc131ce6300",
+            "assign_ipv6_address_on_creation": false,
+            "availability_zone": "ap-northeast-2a",
+            "availability_zone_id": "apne2-az1",
+            "cidr_block": "10.0.1.0/24",
+            "customer_owned_ipv4_pool": "",
+            "enable_dns64": false,
+            "enable_lni_at_device_index": 0,
+            "enable_resource_name_dns_a_record_on_launch": false,
+            "enable_resource_name_dns_aaaa_record_on_launch": false,
+            "id": "subnet-032780bc131ce6300",
+            "ipv6_cidr_block": "",
+            "ipv6_cidr_block_association_id": "",
+            "ipv6_native": false,
+            "map_customer_owned_ip_on_launch": false,
+            "map_public_ip_on_launch": true,
+            "outpost_arn": "",
+            "owner_id": "516268691817",
+            "private_dns_hostname_type_on_launch": "ip-name",
+            "region": "ap-northeast-2",
+            "tags": {},
+            "tags_all": {},
+            "timeouts": null,
+            "vpc_id": "vpc-051957e214917670b"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjo2MDAwMDAwMDAwMDAsImRlbGV0ZSI6MTIwMDAwMDAwMDAwMH0sInNjaGVtYV92ZXJzaW9uIjoiMSJ9",
+          "dependencies": [
+            "aws_vpc.vpc"
+          ],
+          "create_before_destroy": true
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_subnet",
+      "name": "subnet_b",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 1,
+          "attributes": {
+            "arn": "arn:aws:ec2:ap-northeast-2:516268691817:subnet/subnet-0bbbcc093c21f2a44",
+            "assign_ipv6_address_on_creation": false,
+            "availability_zone": "ap-northeast-2c",
+            "availability_zone_id": "apne2-az3",
+            "cidr_block": "10.0.2.0/24",
+            "customer_owned_ipv4_pool": "",
+            "enable_dns64": false,
+            "enable_lni_at_device_index": 0,
+            "enable_resource_name_dns_a_record_on_launch": false,
+            "enable_resource_name_dns_aaaa_record_on_launch": false,
+            "id": "subnet-0bbbcc093c21f2a44",
+            "ipv6_cidr_block": "",
+            "ipv6_cidr_block_association_id": "",
+            "ipv6_native": false,
+            "map_customer_owned_ip_on_launch": false,
+            "map_public_ip_on_launch": true,
+            "outpost_arn": "",
+            "owner_id": "516268691817",
+            "private_dns_hostname_type_on_launch": "ip-name",
+            "region": "ap-northeast-2",
+            "tags": {},
+            "tags_all": {},
+            "timeouts": null,
+            "vpc_id": "vpc-051957e214917670b"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjo2MDAwMDAwMDAwMDAsImRlbGV0ZSI6MTIwMDAwMDAwMDAwMH0sInNjaGVtYV92ZXJzaW9uIjoiMSJ9",
+          "dependencies": [
+            "aws_vpc.vpc"
+          ],
+          "create_before_destroy": true
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "aws_vpc",
+      "name": "vpc",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 1,
+          "attributes": {
+            "arn": "arn:aws:ec2:ap-northeast-2:516268691817:vpc/vpc-051957e214917670b",
+            "assign_generated_ipv6_cidr_block": false,
+            "cidr_block": "10.0.0.0/16",
+            "default_network_acl_id": "acl-034b2877cd0b16485",
+            "default_route_table_id": "rtb-02ad19b7b35163f0d",
+            "default_security_group_id": "sg-03c28a8bd86ae0182",
+            "dhcp_options_id": "dopt-07f2ce309b92e3fa4",
+            "enable_dns_hostnames": false,
+            "enable_dns_support": true,
+            "enable_network_address_usage_metrics": false,
+            "id": "vpc-051957e214917670b",
+            "instance_tenancy": "default",
+            "ipv4_ipam_pool_id": null,
+            "ipv4_netmask_length": null,
+            "ipv6_association_id": "",
+            "ipv6_cidr_block": "",
+            "ipv6_cidr_block_network_border_group": "",
+            "ipv6_ipam_pool_id": "",
+            "ipv6_netmask_length": 0,
+            "main_route_table_id": "rtb-02ad19b7b35163f0d",
+            "owner_id": "516268691817",
+            "region": "ap-northeast-2",
+            "tags": {},
+            "tags_all": {}
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJzY2hlbWFfdmVyc2lvbiI6IjEifQ==",
+          "create_before_destroy": true
+        }
+      ]
+    }
+  ],
+  "check_results": null
+}
