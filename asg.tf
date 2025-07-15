@@ -9,14 +9,13 @@ resource "aws_autoscaling_group" "followme_asg" {
 
 
   target_group_arns = [
-    aws_lb_target_group.followme_tg_blue.arn,
-    aws_lb_target_group.followme_tg_green.arn
+    aws_lb_target_group.followme_tg.arn
   ]
 
 
   launch_template {
     id      = aws_launch_template.followme_lt.id
-    version = "$Latest"
+    version = aws_launch_template.followme_lt.latest_version
   }
 
 

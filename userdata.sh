@@ -3,7 +3,7 @@ set -e
 
 yum update -y
 amazon-linux-extras enable java-openjdk11
-yum install -y java-11-openjdk wget tar ruby
+yum install -y java-11-openjdk wget tar ruby jq aws-cli
 
 # Tomcat 설치
 cd /opt
@@ -25,4 +25,3 @@ systemctl enable codedeploy-agent
 # 로그 경로 확인용 디렉토리 생성
 mkdir -p /opt/codedeploy-app
 chown ec2-user:ec2-user /opt/codedeploy-app
-

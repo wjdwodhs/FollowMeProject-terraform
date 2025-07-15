@@ -14,7 +14,7 @@ resource "aws_iam_role" "ec2_s3_access" {
   })
 }
 
-# EC2용 S3 접근 정책
+# S3 접근 정책
 resource "aws_iam_policy" "s3_access_policy" {
   name        = "followme-s3-access-policy"
   description = "Allow EC2 to access specific S3 bucket"
@@ -26,7 +26,7 @@ resource "aws_iam_policy" "s3_access_policy" {
         Effect = "Allow"
         Action = [
           "s3:GetObject",
-          "s3:GetObjectVersion", 
+          "s3:GetObjectVersion",
           "s3:ListBucket",
           "s3:GetBucketLocation"
         ]
@@ -39,7 +39,7 @@ resource "aws_iam_policy" "s3_access_policy" {
   })
 }
 
-# EC2용 CodeDeploy 접근 정책
+# CodeDeploy 접근 정책
 resource "aws_iam_policy" "codedeploy_access_policy" {
   name        = "followme-codedeploy-access"
   description = "Allow EC2 to interact with CodeDeploy"
@@ -61,7 +61,23 @@ resource "aws_iam_policy" "codedeploy_access_policy" {
   })
 }
 
-# EC2 Role에 정책 연결
+# Secrets Manager 접근 정책
+resource "aws_iam_policy" "secrets_policy" {
+  name = "followme-read-secrets"
+
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Effect   = "Allow",
+        Action   = ["secretsmanager:GetSecretValue"],
+        Resource = aws_secretsmanager_secret.rds_secret.arn
+      }
+    ]
+  })
+}
+
+# 정책 연결 (모두 ec2_s3_access에 붙임)
 resource "aws_iam_role_policy_attachment" "attach_s3_policy" {
   role       = aws_iam_role.ec2_s3_access.name
   policy_arn = aws_iam_policy.s3_access_policy.arn
@@ -70,6 +86,11 @@ resource "aws_iam_role_policy_attachment" "attach_s3_policy" {
 resource "aws_iam_role_policy_attachment" "attach_codedeploy_policy" {
   role       = aws_iam_role.ec2_s3_access.name
   policy_arn = aws_iam_policy.codedeploy_access_policy.arn
+}
+
+resource "aws_iam_role_policy_attachment" "attach_secret_policy" {
+  role       = aws_iam_role.ec2_s3_access.name
+  policy_arn = aws_iam_policy.secrets_policy.arn
 }
 
 # EC2에 붙일 Instance Profile
