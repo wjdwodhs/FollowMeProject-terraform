@@ -16,6 +16,13 @@ resource "aws_security_group" "ec2_sg" {
     security_groups = [aws_security_group.alb_sg.id]  # ALB에서만 허용
   }
 
+    ingress {
+    from_port   = 3000
+    to_port     = 3000
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]  # 테스트용으로 전체 허용, 나중에 내 IP로 제한 가능
+  }
+
   egress {
     from_port   = 0
     to_port     = 0
@@ -81,6 +88,37 @@ resource "aws_security_group" "rds_sg" {
 
   tags = {
     Name = "followme-rds-sg"
+  }
+}
+
+resource "aws_security_group" "grafana_sg" {
+  name        = "grafana-sg"
+  description = "Allow Grafana and SSH"
+  vpc_id      = aws_vpc.vpc.id
+
+  ingress {
+    from_port   = 3000
+    to_port     = 3000
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"] 
+  }
+
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "grafana-sg"
   }
 }
 

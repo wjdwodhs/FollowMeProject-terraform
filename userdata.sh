@@ -1,9 +1,12 @@
 #!/bin/bash
 set -e
 
+# 시스템 업데이트 및 필수 패키지 설치
 yum update -y
 amazon-linux-extras enable java-openjdk11
-yum install -y java-11-openjdk wget tar ruby jq aws-cli
+amazon-linux-extras enable epel
+yum install -y epel-release
+yum install -y java-11-openjdk wget tar ruby jq aws-cli stress
 
 # Tomcat 설치
 cd /opt
@@ -21,7 +24,6 @@ chmod +x ./install
 systemctl start codedeploy-agent
 systemctl enable codedeploy-agent
 
-
-# 로그 경로 확인용 디렉토리 생성
+# 로그 디렉토리 생성
 mkdir -p /opt/codedeploy-app
 chown ec2-user:ec2-user /opt/codedeploy-app
