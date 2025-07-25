@@ -27,3 +27,52 @@ systemctl enable codedeploy-agent
 # 로그 디렉토리 생성
 mkdir -p /opt/codedeploy-app
 chown ec2-user:ec2-user /opt/codedeploy-app
+
+# CloudWatch Agent 설정 파일 생성
+cat <<EOF > /opt/cloudwatch-config.json
+{
+  "metrics": {
+    "append_dimensions": {
+      "InstanceId": "\${aws:InstanceId}",
+      "AutoScalingGroupName": "\${aws:AutoScalingGroupName}"
+    },
+    "namespace": "CWAgent",
+    "metrics_collected": {
+      "mem": {
+        "measurement": [
+          "mem_used_percent",
+          "mem_used",
+          "mem_available",
+          "mem_total"
+        ],
+        "metrics_collection_interval": 60
+      },
+      "disk": {
+        "measurement": [
+          "used_percent",
+          "used",
+          "total"
+        ],
+        "resources": ["/"],
+        "metrics_collection_interval": 60
+      },
+      "cpu": {
+        "measurement": [
+          "cpu_usage_idle",
+          "cpu_usage_user",
+          "cpu_usage_system"
+        ],
+        "metrics_collection_interval": 60,
+        "totalcpu": true
+      }
+    }
+  }
+}
+EOF
+
+# CloudWatch Agent 시작
+/opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl \
+  -a fetch-config \
+  -m ec2 \
+  -c file:/opt/cloudwatch-config.json \
+  -s
