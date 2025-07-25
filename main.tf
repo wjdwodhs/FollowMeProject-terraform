@@ -18,23 +18,6 @@ module "security" {
   vpc_id = module.network.vpc_id
 }
 
-module "iam" {
-  source         = "./modules/iam"
-  rds_secret_arn = ""
-}
-
-
-module "compute" {
-  source               = "./modules/compute"
-  ami_id               = "ami-0daee08993156ca1a"
-  instance_type        = "t2.micro"
-  key_name             = "followme-key"
-  ec2_sg_id            = module.security.ec2_sg_id
-  iam_instance_profile = module.iam.ec2_instance_profile_name
-  subnet_ids           = module.network.public_subnet_ids
-  target_group_arn     = module.alb.target_group_arn
-}
-
 module "alb" {
   source              = "./modules/alb"
   vpc_id              = module.network.vpc_id
@@ -76,21 +59,38 @@ module "codedeploy" {
   deployment_group_name  = "followme-deployment-group"
   service_role_arn       = module.iam.codedeploy_role_arn
   target_group_name      = module.alb.target_group_name
-  autoscaling_group_name = module.autoscaling.asg_name
+  autoscaling_group_name = module.asg.asg_name
 }
 
-module "autoscaling" {
-  source                  = "./modules/autoscaling"
+module "asg" {
+  source                  = "./modules/asg"
   name                    = "followme-asg"
   max_size                = 2
-  min_size                = 1
-  desired_capacity        = 1
+  min_size                = 0
+  desired_capacity        = 0
   subnet_ids              = module.network.public_subnet_ids
   target_group_arn        = module.alb.target_group_arn
   launch_template_id      = module.compute.launch_template_id
   launch_template_version = module.compute.launch_template_version
   instance_name_tag       = "followme-instance"
 }
+
+module "compute" {
+  source               = "./modules/compute"
+  ami_id               = "ami-0daee08993156ca1a"
+  instance_type        = "t2.micro"
+  key_name             = "followme-key"
+  ec2_sg_id            = module.security.ec2_sg_id
+  iam_instance_profile = module.iam.ec2_instance_profile_name
+  subnet_ids           = module.network.public_subnet_ids
+  target_group_arn     = module.alb.target_group_arn
+}
+
+module "iam" {
+  source = "./modules/iam"
+}
+
+
 
 module "rds" {
   source               = "./modules/rds"

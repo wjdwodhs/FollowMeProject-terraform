@@ -16,7 +16,7 @@ resource "aws_codepipeline" "this" {
       owner            = "AWS"
       provider         = "CodeStarSourceConnection"
       version          = "1"
-      output_artifacts = ["source_output"]
+      output_artifacts = ["source_art"]
 
       configuration = {
         ConnectionArn     = var.connection_arn
@@ -35,8 +35,8 @@ resource "aws_codepipeline" "this" {
       category         = "Build"
       owner            = "AWS"
       provider         = "CodeBuild"
-      input_artifacts  = ["source_output"]
-      output_artifacts = ["ROOT"]
+      input_artifacts  = ["source_art"]
+      output_artifacts = ["build_art"]
       version          = "1"
 
       configuration = {
@@ -54,7 +54,7 @@ resource "aws_codepipeline" "this" {
       owner            = "AWS"
       provider         = "CodeDeploy"
       version          = "1"
-      input_artifacts  = ["ROOT"]
+      input_artifacts  = ["build_art"]
 
       configuration = {
         ApplicationName     = var.codedeploy_app_name

@@ -27,6 +27,7 @@ resource "aws_autoscaling_group" "followme_asg" {
   }
 }
 
+
 # Auto Scaling Policy - Scale Out
 resource "aws_autoscaling_policy" "scale_out" {
   name                   = "scale-out-policy"

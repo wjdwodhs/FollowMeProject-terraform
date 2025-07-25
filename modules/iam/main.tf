@@ -41,18 +41,6 @@ resource "aws_iam_policy" "codedeploy_access_policy" {
   })
 }
 
-resource "aws_iam_policy" "secrets_policy" {
-  name = "followme-read-secrets"
-  policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [{
-      Effect = "Allow"
-      Action = ["secretsmanager:GetSecretValue"]
-      Resource = var.rds_secret_arn
-    }]
-  })
-}
-
 resource "aws_iam_policy" "cloudwatch_readonly_policy" {
   name = "followme-cloudwatch-readonly"
   policy = jsonencode({
@@ -80,10 +68,6 @@ resource "aws_iam_role_policy_attachment" "ec2_attach_s3" {
 resource "aws_iam_role_policy_attachment" "ec2_attach_codedeploy" {
   role       = aws_iam_role.ec2_s3_access.name
   policy_arn = aws_iam_policy.codedeploy_access_policy.arn
-}
-resource "aws_iam_role_policy_attachment" "ec2_attach_secret" {
-  role       = aws_iam_role.ec2_s3_access.name
-  policy_arn = aws_iam_policy.secrets_policy.arn
 }
 resource "aws_iam_role_policy_attachment" "ec2_attach_cw" {
   role       = aws_iam_role.ec2_s3_access.name
